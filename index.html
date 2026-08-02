@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dmang-dev — projects</title>
+<meta name="description" content="Open-source projects: retro-console homebrew, MCP servers for emulators, TOTP authenticators, hash benchmarks, and a California grid/weather map.">
+<meta property="og:title" content="dmang-dev — projects">
+<meta property="og:description" content="Retro-console homebrew, MCP servers for emulators, TOTP authenticators on hardware that predates the standard, and hash benchmarks across seven console generations.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127918;</text></svg>">
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1f2328; --muted:#59636e; --line:#d1d9e0;
+    --card:#ffffff; --card-hover:#f6f8fa; --accent:#0969da; --chip:#f6f8fa;
+    --shadow:0 1px 3px rgba(31,35,40,.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0d1117; --fg:#e6edf3; --muted:#9198a1; --line:#3d444d;
+      --card:#151b23; --card-hover:#1c2128; --accent:#4493f8; --chip:#212830;
+      --shadow:0 1px 3px rgba(1,4,9,.5);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#ffffff; --fg:#1f2328; --muted:#59636e; --line:#d1d9e0;
+    --card:#ffffff; --card-hover:#f6f8fa; --accent:#0969da; --chip:#f6f8fa;
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1117; --fg:#e6edf3; --muted:#9198a1; --line:#3d444d;
+    --card:#151b23; --card-hover:#1c2128; --accent:#4493f8; --chip:#212830;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--line);padding:56px 0 32px;margin-bottom:8px}
+  h1{margin:0 0 10px;font-size:2.1rem;letter-spacing:-.02em}
+  h1 .at{color:var(--muted);font-weight:400}
+  .tagline{margin:0 0 20px;color:var(--muted);font-size:1.06rem;max-width:62ch}
+  .toplinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);
+      padding:12px 0;z-index:10;overflow-x:auto;white-space:nowrap}
+  nav a{color:var(--muted);text-decoration:none;margin-right:18px;font-size:.9rem}
+  nav a:hover{color:var(--accent)}
+  section{padding:38px 0 8px;scroll-margin-top:60px}
+  h2{margin:0 0 8px;font-size:1.35rem;letter-spacing:-.01em}
+  .blurb{margin:0 0 22px;color:var(--muted);max-width:74ch}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;display:flex;flex-direction:column;box-shadow:var(--shadow);
+    transition:background .15s,border-color .15s,transform .15s;
+  }
+  .card:hover{background:var(--card-hover);border-color:var(--accent);transform:translateY(-2px)}
+  .card h3{margin:0 0 8px;font-size:1.02rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .card h3 a{color:var(--accent);text-decoration:none}
+  .card h3 a:hover{text-decoration:underline}
+  .card p{margin:0 0 14px;color:var(--muted);font-size:.92rem;flex:1}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .chip{display:inline-flex;align-items:center;gap:5px;background:var(--chip);
+        border:1px solid var(--line);border-radius:20px;padding:2px 9px;
+        font-size:.74rem;color:var(--muted)}
+  .chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .chip.fork{font-style:italic}
+  .chip.archived{opacity:.75}
+  .links{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:5px 13px;border:1px solid var(--line);
+       border-radius:6px;text-decoration:none;color:var(--fg);font-size:.85rem;
+       background:var(--chip);transition:border-color .15s,color .15s}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btn.primary:hover{opacity:.9;color:#fff}
+  footer{border-top:1px solid var(--line);margin-top:56px;padding:28px 0 48px;
+         color:var(--muted);font-size:.88rem}
+  footer a{color:var(--accent)}
+  #themeBtn{position:fixed;right:16px;bottom:16px;width:42px;height:42px;border-radius:50%;
+    border:1px solid var(--line);background:var(--card);color:var(--fg);cursor:pointer;
+    font-size:1.1rem;box-shadow:var(--shadow)}
+  @media (max-width:520px){ h1{font-size:1.7rem} .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1><span class="at">@</span>dmang-dev</h1>
+    <p class="tagline">
+      Open-source work, mostly about making modern things run on hardware that was
+      never asked to do them — two-factor auth on a Game Boy, SHA-256 on a 6502,
+      an AI client driving a PlayStation&nbsp;2 emulator.
+    </p>
+    <div class="toplinks">
+      <a class="btn primary" href="https://dmang.com/">dmang.com</a>
+      <a class="btn" href="https://github.com/dmang-dev">GitHub profile</a>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+      <a href="#psp">PSP Development</a>
+      <a href="#kobo">Kobo E-Readers</a>
+      <a href="#mcp">MCP Servers for Emulators</a>
+      <a href="#totp">TOTP Authenticators</a>
+      <a href="#hashbench">Hash Benchmark ROMs</a>
+      <a href="#weather">California Grid &amp; Weather</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="psp">
+  <h2>PSP Development</h2>
+  <p class="blurb">Toolchain work and homebrew for the Sony PSP — including a one-command native Windows build of the pspdev toolchain, which historically required a Linux box or WSL.</p>
+  <div class="grid">
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/pspdev-win">pspdev-win</a></h3>
+  <p>Build the pspdev PSP homebrew toolchain natively on Windows under MSYS2 - one PowerShell command from clean Windows to a working psp-gcc.</p>
+  <div class="chips"><span class="chip"><i style="background:#89e051"></i>Shell</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/pspdev-win">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/btc-miner-psp">btc-miner-psp</a></h3>
+  <p>Sony PSP Bitcoin pool miner — stratum v1 over WiFi, software SHA-256d nonce sweep on the 333 MHz MIPS R4000. ~40 kH/s, ~10^9x slower than an ASIC. The oldest mainstream portable console that can speak the real Bitcoin protocol today.</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/btc-miner-psp">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/pspdev">pspdev</a></h3>
+  <p>pspdev master repository</p>
+  <div class="chips"><span class="chip fork">fork of pspdev/pspdev</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/pspdev">Source</a></div>
+</article>
+  </div>
+</section>
+
+<section id="kobo">
+  <h2>Kobo E-Readers</h2>
+  <p class="blurb">Kobo readers use Adobe RMSDK, which chokes on CSS that every other reader handles. These find the breakage and fix it.</p>
+  <div class="grid">
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/kobofix">kobofix</a></h3>
+  <p>Make EPUBs work on Kobo e-readers (Adobe RMSDK): detect and fix the modern CSS that breaks them.</p>
+  <div class="chips"><span class="chip"><i style="background:#3572A5"></i>Python</span></div>
+  <div class="links"><a class="btn primary" href="https://dmang-dev.github.io/kobofix/">Live&nbsp;&rarr;</a><a class="btn" href="https://github.com/dmang-dev/kobofix">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/epubcheck-kobo">epubcheck-kobo</a></h3>
+  <p>Unofficial Kobo/RMSDK-aware fork of EPUBCheck (adds KOBO-001/002/003 warnings).</p>
+  <div class="chips"><span class="chip"><i style="background:#b07219"></i>Java</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/epubcheck-kobo">Source</a></div>
+</article>
+  </div>
+</section>
+
+<section id="mcp">
+  <h2>MCP Servers for Emulators</h2>
+  <p class="blurb">Model Context Protocol servers that let an AI client drive a running emulator — read and write memory, press buttons, save state, step frames. One per emulator family, covering most consoles from the NES to the PS3.</p>
+  <div class="grid">
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/mcp-retroarch">mcp-retroarch</a></h3>
+  <p>MCP server for RetroArch — exposes memory r/w, save state, screenshot, pause/frameadvance/reset via the Network Control Interface</p>
+  <div class="chips"><span class="chip"><i style="background:#3178c6"></i>TypeScript</span><span class="chip star">&#9733; 2</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/mcp-retroarch">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/mcp-bizhawk">mcp-bizhawk</a></h3>
+  <p>MCP server for BizHawk — drive NES/SNES/GB/GBC/GBA/Genesis/N64/PSX/Saturn and more through one Lua bridge</p>
+  <div class="chips"><span class="chip"><i style="background:#3178c6"></i>TypeScript</span><span class="chip star">&#9733; 3</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/mcp-bizhawk">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/mcp-dolphin">mcp-dolphin</a></h3>
+  <p>MCP server for Dolphin (GameCube + Wii) — drives memory r/w, controllers, savestate, frame advance via Felk&#x27;s Python-scripting Dolphin fork</p>
+  <div class="chips"><span class="chip"><i style="background:#3178c6"></i>TypeScript</span><span class="chip star">&#9733; 2</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/mcp-dolphin">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/mcp-ppsspp">mcp-ppsspp</a></h3>
+  <p>MCP server for PPSSPP — drive PSP games through PPSSPP&#x27;s built-in WebSocket debugger</p>
+  <div class="chips"><span class="chip"><i style="background:#3178c6"></i>TypeScript</span><span class="chip star">&#9733; 5</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/mcp-ppsspp">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/mcp-mgba">mcp-mgba</a></h3>
+  <p>MCP server bridging Claude (and other MCP clients) to the mGBA Game Boy Advance emulator via Lua scripting</p>
+  <div class="chips"><span class="chip"><i style="background:#3178c6"></i>TypeScript</span><span class="chip star">&#9733; 1</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/mcp-mgba">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/mcp-pine">mcp-pine</a></h3>
+  <p>MCP server for PINE-speaking emulators (PCSX2, RPCS3, etc.) — exposes memory r/w and savestate control</p>
+  <div class="chips"><span class="chip"><i style="background:#3178c6"></i>TypeScript</span><span class="chip star">&#9733; 1</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/mcp-pine">Source</a></div>
+</article>
+  </div>
+</section>
+
+<section id="totp">
+  <h2>TOTP Authenticators</h2>
+  <p class="blurb">RFC 6238 two-factor authenticators running natively on retro handhelds. Real HMAC-SHA1 on hardware that predates the standard by decades — a Game Boy generating the same six digits as your phone.</p>
+  <div class="grid">
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/totp-gb">totp-gb</a></h3>
+  <p>TOTP authenticator for Game Boy / Game Boy Color / Super Game Boy</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span><span class="chip star">&#9733; 4</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/totp-gb">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/totp-3ds">totp-3ds</a></h3>
+  <p>Native Nintendo 3DS / 2DS TOTP (RFC 6238) authenticator — libctru .3dsx for Home Menu</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span><span class="chip star">&#9733; 1</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/totp-3ds">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/totp-nds">totp-nds</a></h3>
+  <p>Native Nintendo DS / DS Lite TOTP (RFC 6238) authenticator with dual-screen UI and libfat persistence</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/totp-nds">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/totp-gba">totp-gba</a></h3>
+  <p>Native Game Boy Advance TOTP authenticator (RFC 6238)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/totp-gba">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/totp-psp">totp-psp</a></h3>
+  <p>Native Sony PSP TOTP (RFC 6238) authenticator — five-screen UI, file-based persistence on memstick</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/totp-psp">Source</a></div>
+</article>
+  </div>
+</section>
+
+<section id="hashbench">
+  <h2>Hash Benchmark ROMs</h2>
+  <p class="blurb">The same 32 hash algorithms, measured on seven generations of console silicon — from a 1.79 MHz 6502 to a 268 MHz ARM11. Native code on each, no emulation shortcuts.</p>
+  <div class="grid">
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench">hash-bench</a></h3>
+  <p>Cross-platform hash-algorithm benchmark suite — 32 algos on 7 Nintendo consoles (NES, GB/GBC, GBA, NDS, DSi, 3DS, N64). Landing page + cross-platform story; per-platform code in sibling repos.</p>
+  <div class="chips"></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-nes">hash-bench-nes</a></h3>
+  <p>NES / Famicom hashing-algorithm benchmark — 18 algos on a 1.79 MHz 6502 (cc65)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-nes">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-gb">hash-bench-gb</a></h3>
+  <p>Game Boy / Game Boy Color hashing-algorithm benchmark — 18 algos on a 4.19 MHz SM83 (GBDK-2020)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span><span class="chip star">&#9733; 2</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-gb">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-gba">hash-bench-gba</a></h3>
+  <p>Game Boy Advance hashing-algorithm benchmark — 32 algos on a 16.78 MHz ARM7TDMI (devkitARM + libtonc)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-gba">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-nds">hash-bench-nds</a></h3>
+  <p>Nintendo DS hashing-algorithm benchmark — 32 algos on a 33.51 MHz ARM946E (devkitARM + libnds)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-nds">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-dsi">hash-bench-dsi</a></h3>
+  <p>Nintendo DSi hashing-algorithm benchmark — 32 algos on a 134 MHz ARM946E (DSi-mode setCpuClock)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-dsi">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-3ds">hash-bench-3ds</a></h3>
+  <p>Nintendo 3DS hashing-algorithm benchmark — 32 algos on a 268-804 MHz ARM11 (devkitARM + libctru)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-3ds">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-n64">hash-bench-n64</a></h3>
+  <p>Nintendo 64 hashing-algorithm benchmark — 32 algos on a 93.75 MHz VR4300 MIPS3 (libdragon)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-n64">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-n64-optimized">hash-bench-n64-optimized</a></h3>
+  <p>Experimental N64 perf sibling of hash-bench-n64 — mini code golf, -O3 unroll on only the algos that win (md5, sha256, sha512); avoid layout changes that hurt sha3</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-n64-optimized">Source</a></div>
+</article>
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/hash-bench-psp">hash-bench-psp</a></h3>
+  <p>Sony PSP hashing-algorithm benchmark — 32 algos on a 333 MHz Allegrex MIPS-II (pspsdk)</p>
+  <div class="chips"><span class="chip"><i style="background:#555555"></i>C</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/hash-bench-psp">Source</a></div>
+</article>
+  </div>
+</section>
+
+<section id="weather">
+  <h2>California Grid &amp; Weather</h2>
+  <p class="blurb">A live map of California utility outages, PSPS shutoff events, NWS alerts, wildfires and NOAA imagery, in one view.</p>
+  <div class="grid">
+<article class="card">
+  <h3><a href="https://github.com/dmang-dev/ca-grid-weather-map">ca-grid-weather-map</a></h3>
+  <p>California utility outages, PSPS events, NWS alerts, wildfires, InciWeb incidents, and live NOAA HRRR wind on one Leaflet map.</p>
+  <div class="chips"><span class="chip"><i style="background:#e34c26"></i>HTML</span></div>
+  <div class="links"><a class="btn" href="https://github.com/dmang-dev/ca-grid-weather-map">Source</a></div>
+</article>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>27 public repositories. Everything here is MIT licensed unless its own
+       repository says otherwise.</p>
+    <p>More at <a href="https://dmang.com/">dmang.com</a> ·
+       <a href="https://github.com/dmang-dev">github.com/dmang-dev</a></p>
+  </div>
+</footer>
+
+<button id="themeBtn" title="Toggle theme" aria-label="Toggle colour theme">&#9681;</button>
+<script>
+  // Respect the OS preference by default; the button pins an explicit override.
+  var root = document.documentElement;
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  if (saved) root.setAttribute('data-theme', saved);
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme');
+    if (!cur) {
+      cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+</script>
+</body>
+</html>

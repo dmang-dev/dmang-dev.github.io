@@ -1,0 +1,32 @@
+# Line endings.
+#
+# This machine's git runs core.autocrlf=true (the Windows default), so every
+# commit warned "LF will be replaced by CRLF" and the next checkout would have
+# flipped the generated page to CRLF -- turning a two-line content change into a
+# whole-file diff. Pinning eol=lf here keeps the working tree and the repo in
+# agreement regardless of the machine, and travels with the repo for anyone who
+# clones it.
+#
+# build.py already writes index.html with newline='' so it emits LF on Windows;
+# this makes git agree instead of quietly undoing it.
+* text=auto eol=lf
+
+# CNAME is parsed strictly by GitHub Pages -- a bare hostname and nothing else.
+# A stray CR would be part of the hostname.
+CNAME text eol=lf
+
+# Binary: never line-ending-convert, never diff as text.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.webp  binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.pdf   binary
+*.zip   binary
+
+# SVG is text (XML) and benefits from real diffs.
+*.svg text eol=lf

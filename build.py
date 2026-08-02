@@ -90,19 +90,32 @@ def gh(path):
 
 
 def live_demo(d):
-    """A homepage is only worth a 'Live' button if it is OUR demo.
+    """URL for the 'Live' button, or None.
 
-    Two exclusions, both about not overclaiming:
-      * github.com/... homepages point back at the repo, so the button would be a
-        duplicate of the Source link.
-      * a FORK's homepage is the UPSTREAM project's site. `pspdev` is a fork of
-        pspdev/pspdev and its homepage is pspdev.github.io -- surfacing that as
-        "Live" would present someone else's project as a demo of this one.
+    Preferred source is the PAGES API, not the homepage field:
+      * it is authoritative -- a repo either publishes or it does not
+      * it returns the CANONICAL url, which now means dmang.com/<repo>/ rather than
+        dmang-dev.github.io/<repo>/. Using the homepage field instead sent visitors
+        through a 301 hop, because those fields still hold the pre-domain addresses.
+      * any repo published later gets a Live button with no edit here
+
+    The homepage field is only a fallback, for a demo hosted somewhere that is not
+    GitHub Pages.
+
+    Excluded either way:
+      * github.com/... homepages -- that duplicates the Source button
+      * FORKS. `pspdev` is a fork of pspdev/pspdev and its homepage is the UPSTREAM
+        project's site; showing that as "Live" would present someone else's work as
+        a demo of this repo.
     """
+    if d.get('fork'):
+        return None
+    if d.get('has_pages'):
+        p = gh('repos/%s/%s/pages' % (OWNER, d['name']))
+        if p and p.get('html_url'):
+            return p['html_url']
     hp = (d.get('homepage') or '').strip()
     if not hp or 'github.com' in hp:
-        return None
-    if d.get('fork'):
         return None
     return hp
 
